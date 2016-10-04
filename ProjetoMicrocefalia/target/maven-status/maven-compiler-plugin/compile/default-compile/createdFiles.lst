@@ -1,4 +1,6 @@
 br\com\projetomicrocefalia\teste\UsuarioDaoTeste.class
+br\com\projetomicrocefalia\model\UsuarioPainel.class
+br\com\projetomicrocefalia\controller\UsuarioController.class
 br\com\projetomicrocefalia\dao\Conexao.class
 br\com\projetomicrocefalia\model\Usuario.class
 br\com\projetomicrocefalia\teste\ConexaoTeste.class

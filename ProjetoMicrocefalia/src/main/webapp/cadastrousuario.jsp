@@ -12,7 +12,7 @@
         <title>Cadastro Usuário (Painel de Controle)</title>
     </head>
     <body>
-        <div >
+        <div style="position: absolute;left: 35%" >
             <h1>Cadastro de Usuário</h1>
 
             <form action="usuariocontroller.do?acao=create" method="POST">
@@ -26,8 +26,6 @@
                 <input type="password" placeholder="Senha" id="password" required size="50" name="senha">
                 <br/><br/>
                 <input type="password" placeholder="Confirme Senha" id="confirm_password" required size="50">
-                <br/><br/>
-                <input type="text" placeholder="Codigo de autenticação" required size="50" name="codigo">
                 <br/><br/>
                 <button type="submit">Enviar</button>
             </form>

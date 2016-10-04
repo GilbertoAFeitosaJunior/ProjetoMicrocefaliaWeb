@@ -19,11 +19,11 @@ public class UsuarioPainel {
     private String login;
     private String senha;
     private Date dataDoCadastro;
+    private boolean permissao;
 
     public UsuarioPainel() {
     }
-    
-    
+
     public int getId() {
         return id;
     }
@@ -72,4 +72,13 @@ public class UsuarioPainel {
         this.dataDoCadastro = dataDoCadastro;
     }
 
+    public boolean isPermissao() {
+        return permissao;
+    }
+
+    public void setPermissao(boolean permissao) {
+        this.permissao = permissao;
+    }
+    
+    
 }

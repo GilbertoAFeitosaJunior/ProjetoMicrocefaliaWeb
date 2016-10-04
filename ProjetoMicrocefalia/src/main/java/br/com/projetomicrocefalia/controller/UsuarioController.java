@@ -7,7 +7,6 @@ package br.com.projetomicrocefalia.controller;
 
 import br.com.projetomicrocefalia.model.UsuarioPainel;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.ServletException;
@@ -22,38 +21,38 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "usuariocontroller.do", urlPatterns = {"/"})
 public class UsuarioController extends HttpServlet {
-    
+
     private UsuarioPainel usuarioPainel = null;
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         String acao = request.getParameter("acao");
-        String codigo = request.getParameter("codigo");
-        
-        if (acao.equals("create") && codigo.equals("admin")) {
+
+        if (acao.equals("create")) {
             String nome = request.getParameter("nome");
             String email = request.getParameter("email");
             String login = request.getParameter("login");
             String senha = request.getParameter("senha");
-            
+            boolean permissao = false;
+
             usuarioPainel = new UsuarioPainel();
             usuarioPainel.setNome(nome);
             usuarioPainel.setEmail(email);
             usuarioPainel.setLogin(login);
             usuarioPainel.setSenha(senha);
             usuarioPainel.setDataDoCadastro(new Date());
-            
+            usuarioPainel.setPermissao(permissao);
+
             response.getWriter().print(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(usuarioPainel.getDataDoCadastro()));
             
-        } else {
-            response.getWriter().print("Codigo de autenticação inválido.");
+            response.sendRedirect("confirmacao.jsp");
         }
     }
-    
+
 }

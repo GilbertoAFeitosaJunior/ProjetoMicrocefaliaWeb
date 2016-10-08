@@ -79,6 +79,4 @@ public class UsuarioPainel {
     public void setPermissao(boolean permissao) {
         this.permissao = permissao;
     }
-    
-    
 }

@@ -5,6 +5,7 @@
  */
 package br.com.projetomicrocefalia.dao;
 
+import br.com.projetomicrocefalia.model.UsuarioPainel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,12 +18,35 @@ import java.util.logging.Logger;
  * @author Gilberto
  */
 public class UsuarioPainelDao {
+
     Connection connection = Conexao.getConexao();
     PreparedStatement ps = null;
     ResultSet rs = null;
-    
-    
-     //Método para fecuar as conexões;
+
+    public boolean salvar(UsuarioPainel usuarioPainel) {
+        String sql = "INSERT INTO usuario_painel(\n"
+                + "            nome, emal, login, senha, permissao, data_cadastro)\n"
+                + "    VALUES (?, ?, ?, ?, ?, ?);";
+
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, usuarioPainel.getNome());
+            ps.setString(2, usuarioPainel.getEmail());
+            ps.setString(3, usuarioPainel.getLogin());
+            ps.setString(4, usuarioPainel.getSenha());
+            ps.setBoolean(5, usuarioPainel.isPermissao());
+            ps.setDate(6, new java.sql.Date(usuarioPainel.getDataDoCadastro().getTime()));
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioPainelDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            fecharConexao();
+        }
+    }
+
+    //Método para fecuar as conexões;
     private void fecharConexao() {
         try {
             if (rs != null) {

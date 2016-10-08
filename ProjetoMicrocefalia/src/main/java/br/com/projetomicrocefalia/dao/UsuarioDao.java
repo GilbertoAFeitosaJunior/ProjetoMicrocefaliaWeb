@@ -75,8 +75,6 @@ public class UsuarioDao {
             System.err.println("Erro: ao tentar salvar no banco de dados");
             Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        } finally {
-            fecharConexao();
         }
     }
 
@@ -200,6 +198,7 @@ public class UsuarioDao {
 
             while (rs.next()) {
                 usuario = new Usuario();
+                
                 usuario.setId(rs.getInt("id"));
                 usuario.setNome(rs.getString("nome"));
                 usuario.setEmail(rs.getString("email"));

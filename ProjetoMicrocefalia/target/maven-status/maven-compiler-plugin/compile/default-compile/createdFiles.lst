@@ -5,4 +5,5 @@ br\com\projetomicrocefalia\dao\Conexao.class
 br\com\projetomicrocefalia\model\Usuario.class
 br\com\projetomicrocefalia\teste\ConexaoTeste.class
 br\com\projetomicrocefalia\dao\UsuarioDao.class
+br\com\projetomicrocefalia\dao\UsuarioPainelDao.class
 br\com\projetomicrocefalia\restful\UsuarioRest.class

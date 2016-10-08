@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UsuarioController extends HttpServlet {
 
     private UsuarioPainel usuarioPainel = null;
+    
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,7 +40,7 @@ public class UsuarioController extends HttpServlet {
             String email = request.getParameter("email");
             String login = request.getParameter("login");
             String senha = request.getParameter("senha");
-            boolean permissao = false;
+            
 
             usuarioPainel = new UsuarioPainel();
             usuarioPainel.setNome(nome);
@@ -47,11 +48,16 @@ public class UsuarioController extends HttpServlet {
             usuarioPainel.setLogin(login);
             usuarioPainel.setSenha(senha);
             usuarioPainel.setDataDoCadastro(new Date());
+            boolean permissao = false;
             usuarioPainel.setPermissao(permissao);
 
-            response.getWriter().print(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(usuarioPainel.getDataDoCadastro()));
+           // response.getWriter().print(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(usuarioPainel.getDataDoCadastro()));
             
             response.sendRedirect("confirmacao.jsp");
+        }
+        
+        if(acao.equals("autenticacao")){
+            response.getWriter().print("Autenticado");
         }
     }
 

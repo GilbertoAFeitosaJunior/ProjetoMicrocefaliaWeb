@@ -22,7 +22,7 @@
 
  <script>
 function enviar() {
-    window.location.href = "cadastrousuario.jsp";
+    window.location.href = "autenticacao.jsp";
 }
 </script>
 </html>

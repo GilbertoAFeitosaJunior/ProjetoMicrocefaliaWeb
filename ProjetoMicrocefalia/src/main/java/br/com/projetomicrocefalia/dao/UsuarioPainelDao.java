@@ -23,26 +23,44 @@ public class UsuarioPainelDao {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public boolean salvar(UsuarioPainel usuarioPainel) {
-        String sql = "INSERT INTO usuario_painel(\n"
-                + "            nome, emal, login, senha, permissao, data_cadastro)\n"
-                + "    VALUES (?, ?, ?, ?, ?, ?);";
-
+    public void salvar(UsuarioPainel usuarioPainel) throws Exception {
         try {
+            String sql = "INSERT INTO tbl_usuario_painel(nome, email, login, senha, permissao, data_cadastro) "
+                    + "VALUES (?,?,?,md5(?),?,?)";
+
             ps = connection.prepareStatement(sql);
             ps.setString(1, usuarioPainel.getNome());
             ps.setString(2, usuarioPainel.getEmail());
             ps.setString(3, usuarioPainel.getLogin());
             ps.setString(4, usuarioPainel.getSenha());
             ps.setBoolean(5, usuarioPainel.isPermissao());
-            ps.setDate(6, new java.sql.Date(usuarioPainel.getDataDoCadastro().getTime()));
+            ps.setTimestamp(6, new java.sql.Timestamp(usuarioPainel.getDataDoCadastro().getTime()));
+            ps.execute();
+        } finally {
+            System.out.println("sql: " + ps.toString());
+            fecharConexao();
+        }
+    }
 
-            return true;
+    public boolean validarLogin(String login) {
+        try {
+            String sql = "select * from tbl_usuario_painel where login=?";
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, login);
+            rs = ps.executeQuery();            
+                       
+            
+            while (rs.next()) {
+                return true;
+            }
+            return false;
+
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioPainelDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        } finally {
-            fecharConexao();
+        } catch (Exception ex) {
+            Logger.getLogger(UsuarioPainelDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
 

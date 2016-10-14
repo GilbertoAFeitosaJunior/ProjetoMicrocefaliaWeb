@@ -31,6 +31,7 @@
             </form>
         </div>
     </body>
+    
     <script>
         var password = document.getElementById("password")
                 , confirm_password = document.getElementById("confirm_password");

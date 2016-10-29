@@ -1,4 +1,5 @@
 br\com\projetomicrocefalia\teste\UsuarioDaoTeste.class
+br\com\projetomicrocefalia\controller\AutenticacaoController.class
 br\com\projetomicrocefalia\model\UsuarioPainel.class
 br\com\projetomicrocefalia\controller\UsuarioController.class
 br\com\projetomicrocefalia\dao\Conexao.class
@@ -7,3 +8,4 @@ br\com\projetomicrocefalia\teste\ConexaoTeste.class
 br\com\projetomicrocefalia\dao\UsuarioDao.class
 br\com\projetomicrocefalia\dao\UsuarioPainelDao.class
 br\com\projetomicrocefalia\restful\UsuarioRest.class
+br\com\projetomicrocefalia\controller\AutenticacaoFilter.class

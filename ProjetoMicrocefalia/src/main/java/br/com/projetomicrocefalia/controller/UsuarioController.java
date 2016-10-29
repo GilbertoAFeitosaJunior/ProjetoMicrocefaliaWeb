@@ -9,11 +9,8 @@ import br.com.projetomicrocefalia.dao.UsuarioPainelDao;
 import br.com.projetomicrocefalia.model.UsuarioPainel;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -21,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,10 +29,70 @@ public class UsuarioController extends HttpServlet {
 
     private UsuarioPainel usuarioPainel = null;
     private UsuarioPainelDao dao;
+    private List<UsuarioPainel> usuarios = null;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String acao = request.getParameter("acao");
+        HttpSession session = request.getSession();
+
+        if (session.getAttribute("usuLogado") != null) {
+
+            if (acao.equals("listaUsuario")) {
+                dao = new UsuarioPainelDao();
+                try {
+                    usuarios = dao.listaUsuarioPainel();
+                    request.setAttribute("usuarios", usuarios);
+                    request.getRequestDispatcher("liberacaousuario.jsp").forward(request, response);
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            response.sendRedirect("login.jsp");
+        }
+
+        if (acao.equals("habilitar")) {
+            usuarioPainel = new UsuarioPainel();
+            usuarioPainel = (UsuarioPainel) session.getAttribute("usuLogado");
+            if (usuarioPainel.isRoot()) {
+                try {
+                    String id = request.getParameter("id");
+                    dao = new UsuarioPainelDao();
+                    dao.permissaoParaUsusario(Integer.parseInt(id), true);
+                     response.sendRedirect("usuariocontroller.do?acao=listaUsuario");
+                } catch (SQLException ex) {
+                    request.setAttribute("msg", "Erro Interno do Servidor. (SQL)");
+                    request.getRequestDispatcher("erro.jsp").forward(request, response);
+                    Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                request.setAttribute("msg", "Erro usuário sem permissão");
+                request.getRequestDispatcher("erro.jsp").forward(request, response);
+            }
+        }
+
+        if (acao.equals("desabilitar")) {
+            usuarioPainel = new UsuarioPainel();
+            usuarioPainel = (UsuarioPainel) session.getAttribute("usuLogado");
+            if (usuarioPainel.isRoot()) {
+                try {
+                    String id = request.getParameter("id");
+                    dao = new UsuarioPainelDao();
+                    dao.permissaoParaUsusario(Integer.parseInt(id), false);
+                    response.sendRedirect("usuariocontroller.do?acao=listaUsuario");
+                } catch (SQLException ex) {
+                    request.setAttribute("msg", "Erro Interno do Servidor. (SQL)");
+                    request.getRequestDispatcher("erro.jsp").forward(request, response);
+                    Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                request.setAttribute("msg", "Erro usuário sem permissão");
+                request.getRequestDispatcher("erro.jsp").forward(request, response);
+            }
+        }
     }
 
     @Override
@@ -49,7 +107,7 @@ public class UsuarioController extends HttpServlet {
             String login = request.getParameter("login");
             String senha = request.getParameter("senha");
 
-            if (!dao.validarLogin(login)) {                
+            if (!dao.validarLogin(login)) {
                 usuarioPainel = new UsuarioPainel();
 
                 usuarioPainel.setNome(nome);
@@ -62,22 +120,21 @@ public class UsuarioController extends HttpServlet {
 
                 try {
                     dao.salvar(usuarioPainel);
-                    response.sendRedirect("confirmacao.jsp");
                 } catch (SQLException e) {
-                    response.getWriter().append("Erro Interno do Servidor.").append(e.getMessage());
+                    request.setAttribute("msg", "Erro Interno do Servidor. (SQL)");
+                    request.getRequestDispatcher("erro.jsp").forward(request, response);
                 } catch (NullPointerException e) {
-                    response.getWriter().append("Erro Interno do Servidor, Você esqueceu de preencher algum campo.").append(e.getMessage());
+                    request.setAttribute("msg", "Erro Interno do Servidor, Você esqueceu de preencher algum campo.");
+                    request.getRequestDispatcher("erro.jsp").forward(request, response);
                 } catch (Exception e) {
-                    response.sendRedirect("erro.jsp");
+                    request.setAttribute("msg", "Erro_no_servidor");
+                    request.getRequestDispatcher("erro.jsp").forward(request, response);
                 }
+                request.getRequestDispatcher("aviso_confirmacao.jsp").forward(request, response);
             } else {
-                response.getWriter().append("Erro usuario não autenticado, favor aguarda a liberação");
+                request.setAttribute("msg", "Erro usuário já cadastrado, favor aguardar a liberação no sistema");
+                request.getRequestDispatcher("erro.jsp").forward(request, response);
             }
         }
-
-        if (acao.equals("autenticacao")) {
-            response.getWriter().print("Autenticado");
-        }
     }
-
 }

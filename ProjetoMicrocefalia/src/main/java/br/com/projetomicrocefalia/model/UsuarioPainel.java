@@ -20,9 +20,7 @@ public class UsuarioPainel {
     private String senha;
     private Date dataDoCadastro;
     private boolean permissao;
-
-    public UsuarioPainel() {
-    }
+    private boolean root;
 
     public int getId() {
         return id;
@@ -79,4 +77,13 @@ public class UsuarioPainel {
     public void setPermissao(boolean permissao) {
         this.permissao = permissao;
     }
+
+    public boolean isRoot() {
+        return root;
+    }
+
+    public void setRoot(boolean root) {
+        this.root = root;
+    }
+
 }

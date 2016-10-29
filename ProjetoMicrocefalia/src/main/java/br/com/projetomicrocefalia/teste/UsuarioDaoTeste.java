@@ -9,7 +9,9 @@ import br.com.projetomicrocefalia.dao.UsuarioDao;
 import br.com.projetomicrocefalia.model.Usuario;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,6 +41,8 @@ public class UsuarioDaoTeste {
     public static void main(String[] args) {
 
         salvarUsuario();
+        lista();
+
     }
 
     public static void salvarUsuario() {
@@ -51,11 +55,30 @@ public class UsuarioDaoTeste {
         }
         usuario = new Usuario(nome, email, foto, idgoogle, ddd, telefone, logradouro, numero, bairro, cidade, pais, datanascimento, estado);
 
-       usuario = dao.salvar(usuario);
+        usuario = dao.salvar(usuario);
 
         System.out.println(usuario.getId().toString());
         System.out.println(usuario.getNome());
         System.out.println(new SimpleDateFormat("dd-MM-yyyy").format(datanascimento));
+    }
+
+    public static void lista() {
+        Usuario usu1 = new Usuario(nome, email, foto, idgoogle, ddd, telefone, logradouro, numero, bairro, cidade, pais, datanascimento, estado);
+        Usuario usu2 = new Usuario(nome, email, foto, idgoogle, ddd, telefone, logradouro, numero, bairro, cidade, pais, datanascimento, estado);
+        Usuario usu3 = new Usuario(nome, email, foto, idgoogle, ddd, telefone, logradouro, numero, bairro, cidade, pais, datanascimento, estado);
+        List<Usuario> lista = Arrays.asList(usu1, usu2, usu3);
+
+        System.out.println("For normal'");
+        for (Usuario item : lista) {
+            System.out.println(item.getNome());
+        }
+
+        System.out.println("For no Lambda'");
+        lista.forEach(u-> System.out.println(u.getNome()));
+     
+        
+       
+
     }
 
 }

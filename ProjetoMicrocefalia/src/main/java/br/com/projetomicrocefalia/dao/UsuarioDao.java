@@ -130,7 +130,6 @@ public class UsuarioDao {
         }
     }
 
-    
     public void editarUsuario(Usuario usuario) {
         try {
             String sql = "UPDATE tbl_usuario\n"
@@ -156,39 +155,14 @@ public class UsuarioDao {
             ps.setString(13, usuario.getEstado());
             ps.setInt(14, usuario.getId());
             ps.execute();
-
-            /*
-            String sql2 = "SELECT * FROM tbl_usuario where id=?";
-            ps = connection.prepareStatement(sql2);
-            ps.setInt(1, usuario.getId());
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                usuario = new Usuario();
-                usuario.setId(rs.getInt("id"));
-                usuario.setNome(rs.getString("nome"));
-                usuario.setEmail(rs.getString("email"));
-                usuario.setFoto(rs.getString("foto"));
-                usuario.setIdgoogle(rs.getString("idgoogle"));
-                usuario.setTelefone(rs.getString("telefone"));
-                usuario.setLogradouro(rs.getString("logradouro"));
-                usuario.setNumero(rs.getString("numero"));
-                usuario.setBairro(rs.getString("bairro"));
-                usuario.setCidade(rs.getString("cidade"));
-                usuario.setPais(rs.getString("pais"));
-                usuario.setDatanascimento(rs.getDate("datanascimento"));
-                usuario.setDdd(rs.getString("ddd"));
-            }
-*/
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             fecharConexao();
         }
     }
-    
-    
-    public Usuario exibirUsuario(int id){
+
+    public Usuario exibirUsuario(int id) {
         try {
             Usuario usuario = null;
             String url = "SELECT * FROM tbl_usuario where id=?";
@@ -218,7 +192,7 @@ public class UsuarioDao {
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        }finally{
+        } finally {
             fecharConexao();
         }
     }

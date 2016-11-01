@@ -1,5 +1,6 @@
 br\com\projetomicrocefalia\teste\UsuarioDaoTeste.class
 br\com\projetomicrocefalia\controller\AutenticacaoController.class
+br\com\projetomicrocefalia\controller\UsuarioAndroidController.class
 br\com\projetomicrocefalia\model\UsuarioPainel.class
 br\com\projetomicrocefalia\controller\UsuarioController.class
 br\com\projetomicrocefalia\dao\Conexao.class

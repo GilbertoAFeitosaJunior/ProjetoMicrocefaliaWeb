@@ -21,6 +21,7 @@ public class UsuarioAndroidController extends HttpServlet {
 
     private List<Usuario> usuarios = null;
     private UsuarioDao dao = null;
+    private Usuario usuario  = null;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,7 +38,14 @@ public class UsuarioAndroidController extends HttpServlet {
         }
 
         if (acao.equals("exibirperfil")) {
-
+            dao = new UsuarioDao();
+            String id = request.getParameter("id");
+            if(!id.isEmpty()){
+                 usuario = dao.exibirUsuario(Integer.parseInt(id));
+                 request.setAttribute("usuarioAndroid", usuario);
+                 request.getRequestDispatcher("exibirusuarioandroid.jsp").forward(request, response);
+            }
+            
         }
     }
 

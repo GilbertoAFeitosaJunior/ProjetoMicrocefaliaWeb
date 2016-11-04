@@ -34,7 +34,7 @@
                             <td>${usuario.email}</td>
                             <td>${usuario.estado}</td>
                             <td>
-                                <a href = "usuandroidcontroller.do?acao=exibirperfil"> VISUALIZAR </a>
+                                <a href = "usuandroidcontroller.do?acao=exibirperfil&id=${usuario.id}"> VISUALIZAR </a>
                             </td>
                         </tr>
                     </c:if>

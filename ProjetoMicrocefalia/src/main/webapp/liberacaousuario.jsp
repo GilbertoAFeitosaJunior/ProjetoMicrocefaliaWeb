@@ -29,7 +29,7 @@
                     <th>OPÇAO DO SISTEMA</th>
                 </tr>
                 <c:forEach var="usuario" items="${requestScope.usuarios}">
-                    <c:if test="${usuario.nome != 'admin'}">
+                    <c:if test="${usuario.login != 'admin'}">
                         <tr>
                             <td>${usuario.id}</td>
                             <td>${usuario.nome}</td>

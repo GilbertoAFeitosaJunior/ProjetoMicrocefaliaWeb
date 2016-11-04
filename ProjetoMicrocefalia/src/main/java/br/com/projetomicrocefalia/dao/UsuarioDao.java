@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -197,6 +199,44 @@ public class UsuarioDao {
         }
     }
 
+    
+     public List<Usuario> listaUsuarios() {
+        try {
+            Usuario usuario = null;
+            List<Usuario> usuarios = new ArrayList<>();
+            String url = "SELECT * FROM tbl_usuario";
+            ps = connection.prepareStatement(url);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                usuario = new Usuario();
+                
+                usuario.setId(rs.getInt("id"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setFoto(rs.getString("foto"));
+                usuario.setIdgoogle(rs.getString("idgoogle"));
+                usuario.setTelefone(rs.getString("telefone"));
+                usuario.setLogradouro(rs.getString("logradouro"));
+                usuario.setNumero(rs.getString("numero"));
+                usuario.setBairro(rs.getString("bairro"));
+                usuario.setCidade(rs.getString("cidade"));
+                usuario.setPais(rs.getString("pais"));
+                usuario.setDatanascimento(rs.getDate("datanascimento"));
+                usuario.setDdd(rs.getString("ddd"));
+                usuario.setEstado(rs.getString("estado"));
+                
+                usuarios.add(usuario);
+            }
+            return usuarios;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } finally {
+            fecharConexao();
+        }
+    }
+    
     //Método para fecuar as conexões;
     private void fecharConexao() {
         try {

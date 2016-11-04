@@ -42,7 +42,7 @@ public class AutenticacaoFilter implements Filter {
         HttpSession session = httpServletRequest.getSession();
 
         if (session.getAttribute("usuLogado") != null || url.indexOf("login.jsp") > 1 || url.lastIndexOf("autenticador.do") > 1
-                || url.lastIndexOf("cadastrousuario.jsp") > 1 || url.lastIndexOf("usuariocontroller.do") > 1) {
+                || url.lastIndexOf("cadastrousuario.jsp") > 1 || url.lastIndexOf("usuariocontroller.do") > 1 || url.lastIndexOf("rest")>1) {
             chain.doFilter(request, response);
         } else {
             httpServletResponse.sendRedirect("login.jsp");

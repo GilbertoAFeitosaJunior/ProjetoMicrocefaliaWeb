@@ -15,20 +15,20 @@
         <a href="welcome.jsp">Home</a></br></br></br>
 
         <img src="${requestScope.usuarioAndroid.foto}" width="200" height="200" /> 
-        <h2>NOME: ${requestScope.usuarioAndroid.nome}</h2>
-        <p>ID: ${requestScope.usuarioAndroid.id}</p>
-        <p>ID GOOGLE: ${requestScope.usuarioAndroid.idgoogle}</p>
-        <p>E-MAIL: ${requestScope.usuarioAndroid.email}</p>
-        <p>TELEFONE: ${requestScope.usuarioAndroid.ddd} - ${requestScope.usuarioAndroid.telefone}</p>
-        <p>DATA DE NASCIMENTO: ${requestScope.usuarioAndroid.datanascimento}</p>
-        <p>E-MAIL: ${requestScope.usuarioAndroid.email}</p>
-        <p>LOGRADOURO: ${requestScope.usuarioAndroid.logradouro} </p>
-        <p>NÚMERO: ${requestScope.usuarioAndroid.numero} </p>
-        <p>BAIRRO: ${requestScope.usuarioAndroid.bairro} </p>
-        <p>CIDADE: ${requestScope.usuarioAndroid.cidade} </p>
-        <p>ESTADO: ${requestScope.usuarioAndroid.estado} </p>
-        <p>PAIS: ${requestScope.usuarioAndroid.pais} </p>
-        
+        <h2>${requestScope.usuarioAndroid.nome}</h2>
+        <p><strong> ID:</strong> ${requestScope.usuarioAndroid.id}</p>
+        <p><strong>ID GOOGLE: </strong>${requestScope.usuarioAndroid.idgoogle}</p>
+        <p><strong>E-MAIL:</strong> ${requestScope.usuarioAndroid.email}</p>
+        <p><strong>TELEFONE:</strong> ${requestScope.usuarioAndroid.ddd} - ${requestScope.usuarioAndroid.telefone}</p>
+        <p><strong>DATA DE NASCIMENTO: </strong>${requestScope.usuarioAndroid.datanascimento}</p>
+        <p><strong>E-MAIL:</strong> ${requestScope.usuarioAndroid.email}</p>
+        <p><strong>LOGRADOURO:</strong> ${requestScope.usuarioAndroid.logradouro} </p>
+        <p><strong>NÚMERO:</strong> ${requestScope.usuarioAndroid.numero} </p>
+        <p><strong>BAIRRO: </strong>${requestScope.usuarioAndroid.bairro} </p>
+        <p><strong>CIDADE:</strong> ${requestScope.usuarioAndroid.cidade} </p>
+        <p><strong>ESTADO: </strong>${requestScope.usuarioAndroid.estado} </p>
+        <p><strong>PAIS:</strong> ${requestScope.usuarioAndroid.pais} </p>
+
 
 
 

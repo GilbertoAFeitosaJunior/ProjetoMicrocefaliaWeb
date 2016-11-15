@@ -28,6 +28,7 @@ public class Usuario implements Serializable {
     private String pais;
     private Date datanascimento;
     private String estado;
+    private String cep;
 
     public Usuario() {
     }
@@ -161,6 +162,15 @@ public class Usuario implements Serializable {
         this.estado = estado;
     }
 
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    
     
     
 }

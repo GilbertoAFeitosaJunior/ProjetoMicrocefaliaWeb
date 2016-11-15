@@ -6,29 +6,27 @@
 package br.com.projetomicrocefalia.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *
  * @author Gilberto
  */
-public class Noticia implements Serializable {
-
-    private int id;
+public class ChamadaNoticia implements Serializable{
+    
+    private int idNoticia;
     private String foto;
     private String titulo;
     private String chamada;
-    private Date data;
-    private String fonte;
-    private String noticia;
-    private UsuarioPainel usuarioPainel;
+    private int qtdCurtida;
+    private int qtdViews;
+    private int qtdComentarios;
 
-    public int getId() {
-        return id;
+    public int getIdNoticia() {
+        return idNoticia;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdNoticia(int idNoticia) {
+        this.idNoticia = idNoticia;
     }
 
     public String getFoto() {
@@ -55,38 +53,30 @@ public class Noticia implements Serializable {
         this.chamada = chamada;
     }
 
-    public Date getData() {
-        return data;
+    public int getQtdCurtida() {
+        return qtdCurtida;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setQtdCurtida(int qtdCurtida) {
+        this.qtdCurtida = qtdCurtida;
     }
 
-    public String getFonte() {
-        return fonte;
+    public int getQtdViews() {
+        return qtdViews;
     }
 
-    public void setFonte(String fonte) {
-        this.fonte = fonte;
+    public void setQtdViews(int qtdViews) {
+        this.qtdViews = qtdViews;
     }
 
-    public String getNoticia() {
-        return noticia;
+    public int getQtdComentarios() {
+        return qtdComentarios;
     }
 
-    public void setNoticia(String noticia) {
-        this.noticia = noticia;
+    public void setQtdComentarios(int qtdComentarios) {
+        this.qtdComentarios = qtdComentarios;
     }
-
-    public UsuarioPainel getUsuarioPainel() {
-        return usuarioPainel;
-    }
-
-    public void setUsuarioPainel(UsuarioPainel usuarioPainel) {
-        this.usuarioPainel = usuarioPainel;
-    }
-
     
-
+    
+    
 }

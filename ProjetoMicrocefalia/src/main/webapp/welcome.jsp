@@ -18,6 +18,7 @@
 
         <ul>
             <li><a href="criarnoticias.jsp">Adicionar Nova Nóticia</a></li>
+            <li><a href="noticiacontroller.do?acao=listaNoticia">Lista de Notícias</a></li>
             <li><a href="usuariocontroller.do?acao=listaUsuario">Liberar Usuario Web</a></li>
             <li><a href="usuandroidcontroller.do?acao=listar">Usuarios Android</a></li>
             <li><a href="autenticador.do">Sair do Sistema</a></li>

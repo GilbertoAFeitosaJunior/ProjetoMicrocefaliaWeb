@@ -8,6 +8,7 @@ package br.com.projetomicrocefalia.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,7 +24,7 @@ public class Conexao {
         String usuario = "postgres";
         String senha = "123456";
 
-        try {
+        try {           
             Class.forName("org.postgresql.Driver");
             con = DriverManager.getConnection(url, usuario, senha);
             System.out.println("Conectado com sucesso...");

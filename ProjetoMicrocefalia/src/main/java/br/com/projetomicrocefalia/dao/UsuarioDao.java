@@ -7,11 +7,15 @@ package br.com.projetomicrocefalia.dao;
 
 import br.com.projetomicrocefalia.model.Usuario;
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,8 +43,8 @@ public class UsuarioDao {
     private Usuario criarUsuario(Usuario usuario) {
         try {
             String sql = "INSERT INTO tbl_usuario (nome, email, foto, idgoogle, telefone, "
-                    + "logradouro, numero, bairro, cidade, pais, datanascimento, ddd, estado )"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?);";
+                    + "logradouro, numero, bairro, cidade, pais, datanascimento, ddd, estado, cep )"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?);";
 
             ps = connection.prepareStatement(sql);
             ps.setString(1, usuario.getNome());
@@ -61,6 +65,7 @@ public class UsuarioDao {
 
             ps.setString(12, usuario.getDdd());
             ps.setString(13, usuario.getEstado());
+            ps.setString(14, usuario.getCep());
             ps.execute();
 
             sql = "SELECT MAX(id) AS id FROM tbl_usuario";
@@ -104,6 +109,7 @@ public class UsuarioDao {
                 usu.setDatanascimento(rs.getDate("datanascimento"));
                 usu.setDdd(rs.getString("ddd"));
                 usu.setEstado(rs.getString("estado"));
+                usu.setCep(rs.getString("cep"));
             }
             return usu;
         } catch (SQLException ex) {
@@ -136,7 +142,7 @@ public class UsuarioDao {
         try {
             String sql = "UPDATE tbl_usuario\n"
                     + "   SET nome=?, email=?, foto=?, idgoogle=?, telefone=?, logradouro=?, \n"
-                    + "       numero=?, bairro=?, cidade=?, pais=?, datanascimento=?, ddd=?, estado=?\n"
+                    + "       numero=?, bairro=?, cidade=?, pais=?, datanascimento=?, ddd=?, estado=?, cep=?\n"
                     + " WHERE id=?";
             ps = connection.prepareStatement(sql);
             ps.setString(1, usuario.getNome());
@@ -149,13 +155,18 @@ public class UsuarioDao {
             ps.setString(8, usuario.getBairro());
             ps.setString(9, usuario.getCidade());
             ps.setString(10, usuario.getPais());
+
+            TimeZone timeZone = TimeZone.getTimeZone("systemDate");
+            TimeZone.setDefault(timeZone);
             if (usuario.getDatanascimento() == null) {
                 ps.setDate(11, null);
             } else {
                 ps.setDate(11, new java.sql.Date(usuario.getDatanascimento().getTime()));
             }
+            ps.setString(12, usuario.getDdd());
             ps.setString(13, usuario.getEstado());
-            ps.setInt(14, usuario.getId());
+            ps.setString(14, usuario.getCep());
+            ps.setInt(15, usuario.getId());
             ps.execute();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -174,7 +185,7 @@ public class UsuarioDao {
 
             while (rs.next()) {
                 usuario = new Usuario();
-                
+
                 usuario.setId(rs.getInt("id"));
                 usuario.setNome(rs.getString("nome"));
                 usuario.setEmail(rs.getString("email"));
@@ -189,6 +200,7 @@ public class UsuarioDao {
                 usuario.setDatanascimento(rs.getDate("datanascimento"));
                 usuario.setDdd(rs.getString("ddd"));
                 usuario.setEstado(rs.getString("estado"));
+                usuario.setCep(rs.getString("cep"));
             }
             return usuario;
         } catch (SQLException ex) {
@@ -199,8 +211,7 @@ public class UsuarioDao {
         }
     }
 
-    
-     public List<Usuario> listaUsuarios() {
+    public List<Usuario> listaUsuarios() {
         try {
             Usuario usuario = null;
             List<Usuario> usuarios = new ArrayList<>();
@@ -210,7 +221,7 @@ public class UsuarioDao {
 
             while (rs.next()) {
                 usuario = new Usuario();
-                
+
                 usuario.setId(rs.getInt("id"));
                 usuario.setNome(rs.getString("nome"));
                 usuario.setEmail(rs.getString("email"));
@@ -225,7 +236,8 @@ public class UsuarioDao {
                 usuario.setDatanascimento(rs.getDate("datanascimento"));
                 usuario.setDdd(rs.getString("ddd"));
                 usuario.setEstado(rs.getString("estado"));
-                
+                usuario.setCep(rs.getString("cep"));
+
                 usuarios.add(usuario);
             }
             return usuarios;
@@ -236,7 +248,7 @@ public class UsuarioDao {
             fecharConexao();
         }
     }
-    
+
     //Método para fecuar as conexões;
     private void fecharConexao() {
         try {

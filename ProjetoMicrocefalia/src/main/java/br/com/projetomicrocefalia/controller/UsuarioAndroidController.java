@@ -21,12 +21,12 @@ public class UsuarioAndroidController extends HttpServlet {
 
     private List<Usuario> usuarios = null;
     private UsuarioDao dao = null;
-    private Usuario usuario  = null;
+    private Usuario usuario = null;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        request.setCharacterEncoding("utf-8");
         String acao = request.getParameter("acao");
 
         if (acao.equals("listar")) {
@@ -40,19 +40,18 @@ public class UsuarioAndroidController extends HttpServlet {
         if (acao.equals("exibirperfil")) {
             dao = new UsuarioDao();
             String id = request.getParameter("id");
-            if(!id.isEmpty()){
-                 usuario = dao.exibirUsuario(Integer.parseInt(id));
-                 request.setAttribute("usuarioAndroid", usuario);
-                 request.getRequestDispatcher("exibirusuarioandroid.jsp").forward(request, response);
+            if (!id.isEmpty()) {
+                usuario = dao.exibirUsuario(Integer.parseInt(id));
+                request.setAttribute("usuarioAndroid", usuario);
+                request.getRequestDispatcher("exibirusuarioandroid.jsp").forward(request, response);
             }
-            
+
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
     }
 
 }

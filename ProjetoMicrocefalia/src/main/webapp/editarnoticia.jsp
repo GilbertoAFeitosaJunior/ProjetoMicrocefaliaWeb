@@ -20,24 +20,27 @@
     </head>
     <body>
         <a href="welcome.jsp">Home</a></br>
-        <h1>Adicionar nova notícia</h1>
-        <form action="noticiacontroller.do?acao=adicionarNoticia" method="POST" accept-charset="utf-8">
-            <input type="text" placeholder="LINK DA FOTO DA NOTÍCIA"  required size="150" name="fotoNoticia"/>
+        <h1>Editar Notícia</h1>
+        <form action="noticiacontroller.do?acao=editarnoticia" method="POST">
+            <input type="text" value="${requestScope.noticia.id}" readonly="readonly" required size="150" name="idNoticia"/>
             </br>
             </br>
-            <input type="text" placeholder="TITULO DA NOTICIA"  required size="150" name="tituloNoticia"/>
+            <input type="text" value="${requestScope.noticia.foto}" required size="150" name="fotoNoticia"/>
             </br>
             </br>
-            <input type="text" placeholder="CHAMADA DA NOTÍCIA"  required size="150" name="chamadaNoticia"/>
+            <input type="text" value="${requestScope.noticia.titulo}" required size="150" name="tituloNoticia"/>
             </br>
             </br>
-            <input type="text" placeholder="FONTE DA NOTÍCIA"  required size="150" name="fonteNoticia" />
+            <input type="text" value="${requestScope.noticia.chamada}"  required size="150" name="chamadaNoticia"/>
             </br>
             </br>
-            <input type="text" placeholder="DATA DA NOTÍCIA"  required size="150" name="dataNoticia" id="dataNoticia" />
+            <input type="text" value="${requestScope.noticia.fonte}" required size="150" name="fonteNoticia" />
             </br>
             </br>
-            <textarea cols="110"  placeholder="TEXTO DA NOTÍCIA"  required rows="20" name="conteudoNoticia" ></textarea>
+            <input type="text" value="${requestScope.noticia.data}"  required size="150" name="dataNoticia" id="dataNoticia" />
+            </br>
+            </br>
+            <textarea cols="110"  required rows="20" name="conteudoNoticia" >${requestScope.noticia.noticia}</textarea>
 
             <br/><br/>
             <button type="submit">SALVAR NOTÍCIA</button>

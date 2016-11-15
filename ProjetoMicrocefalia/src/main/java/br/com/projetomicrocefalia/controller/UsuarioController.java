@@ -34,6 +34,7 @@ public class UsuarioController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        request.setCharacterEncoding("utf-8");
         String acao = request.getParameter("acao");
         HttpSession session = request.getSession();
 
@@ -62,7 +63,7 @@ public class UsuarioController extends HttpServlet {
                     String id = request.getParameter("id");
                     dao = new UsuarioPainelDao();
                     dao.permissaoParaUsusario(Integer.parseInt(id), true);
-                     response.sendRedirect("usuariocontroller.do?acao=listaUsuario");
+                    response.sendRedirect("usuariocontroller.do?acao=listaUsuario");
                 } catch (SQLException ex) {
                     request.setAttribute("msg", "Erro Interno do Servidor. (SQL)");
                     request.getRequestDispatcher("erro.jsp").forward(request, response);
@@ -97,7 +98,8 @@ public class UsuarioController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        
+        request.setCharacterEncoding("utf-8");
         String acao = request.getParameter("acao");
 
         if (acao.equals("create")) {

@@ -15,6 +15,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,6 +40,8 @@ public class UsuarioPainelDao {
             ps.setString(3, usuarioPainel.getLogin());
             ps.setString(4, usuarioPainel.getSenha());
             ps.setBoolean(5, usuarioPainel.isPermissao());
+            TimeZone timeZone = TimeZone.getTimeZone("America/Recife");
+            TimeZone.setDefault(timeZone);
             ps.setTimestamp(6, new java.sql.Timestamp(usuarioPainel.getDataDoCadastro().getTime()));
             ps.setBoolean(7, false);
             ps.execute();

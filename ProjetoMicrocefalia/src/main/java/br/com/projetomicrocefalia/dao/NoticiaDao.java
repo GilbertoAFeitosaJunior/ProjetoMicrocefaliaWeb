@@ -6,14 +6,21 @@
 package br.com.projetomicrocefalia.dao;
 
 import br.com.projetomicrocefalia.model.ChamadaNoticia;
+import br.com.projetomicrocefalia.model.CurtidasUsuario;
+import br.com.projetomicrocefalia.model.Curtir;
+import br.com.projetomicrocefalia.model.CurtirTemp;
 import br.com.projetomicrocefalia.model.Noticia;
 import br.com.projetomicrocefalia.model.Pesquisa;
+import br.com.projetomicrocefalia.model.Usuario;
 import br.com.projetomicrocefalia.model.UsuarioPainel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -141,7 +148,7 @@ public class NoticiaDao {
     public List<ChamadaNoticia> chamadasNoticias(Pesquisa pesquisa) {
         List<ChamadaNoticia> chamadas = new ArrayList<>();
         ChamadaNoticia cn = null;
-        String sqlNoticia = "SELECT id, foto, titulo, chamada  FROM tbl_noticia \n"
+        String sqlNoticia = "SELECT id, foto, titulo, chamada, count_views  FROM tbl_noticia \n"
                 + "WHERE titulo ILIKE  ?\n"
                 + "ORDER BY data DESC\n"
                 + "LIMIT 10 OFFSET ?*10";
@@ -156,7 +163,7 @@ public class NoticiaDao {
 
             while (rs.next()) {
                 cn = new ChamadaNoticia();
-                
+
                 cn.setIdNoticia(rs.getInt("id"));
 
                 psTemp = connection.prepareStatement(sqlCurtir);
@@ -173,6 +180,7 @@ public class NoticiaDao {
                     cn.setQtdComentarios(rsTemp.getInt("comentario"));
                 }
 
+                cn.setQtdViews(rs.getInt("count_views"));
                 cn.setFoto(rs.getString("foto"));
                 cn.setChamada(rs.getString("titulo"));
                 cn.setTitulo(rs.getString("titulo"));
@@ -185,7 +193,139 @@ public class NoticiaDao {
             System.out.println(ps);
         }
 
+        fecharConexao();
+        try {
+            psTemp.close();
+            rsTemp.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(NoticiaDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return chamadas;
+    }
+
+    public Noticia exibirNoticiaAndroid(int id) {
+        Noticia noticia = null;
+        int qtdViews = 0;
+        try {
+            String sqlCount = "SELECT count_views\n"
+                    + "FROM tbl_noticia\n"
+                    + "WHERE id=?";
+            psTemp = connection.prepareStatement(sqlCount);
+            psTemp.setInt(1, id);
+            rsTemp = psTemp.executeQuery();
+
+            while (rsTemp.next()) {
+                qtdViews = rsTemp.getInt("count_views");
+            }
+
+            String sqlUpdate = "UPDATE tbl_noticia\n"
+                    + "SET count_views=?\n"
+                    + "WHERE id=?";
+            psTemp = connection.prepareStatement(sqlUpdate);
+            psTemp.setInt(1, qtdViews + 1);
+            psTemp.setInt(2, id);
+            psTemp.execute();
+
+            noticia = new Noticia();
+            String sqlNoticia = "SELECT id, foto, titulo, data, fonte, noticia\n"
+                    + "FROM tbl_noticia\n"
+                    + "WHERE id=?";
+
+            ps = connection.prepareStatement(sqlNoticia);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                noticia.setId(rs.getInt("id"));
+                noticia.setFoto(rs.getString("foto"));
+                noticia.setTitulo(rs.getString("titulo"));
+                noticia.setData(rs.getDate("data"));
+                noticia.setNoticia(rs.getString("noticia"));
+                noticia.setFonte(rs.getString("fonte"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NoticiaDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        fecharConexao();
+        try {
+            psTemp.close();
+            rsTemp.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(NoticiaDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return noticia;
+    }
+
+    public void curtir(CurtirTemp curtirTemp) {
+        String stql = "INSERT INTO tbl_curtir(id_usuario, id_noticia, curtir, data)\n"
+                + "VALUES (?, ?, ?, ?)";
+        try {
+            ps = connection.prepareStatement(stql);
+            ps.setInt(1, curtirTemp.getIdUsuario());
+            ps.setInt(2, curtirTemp.getIdNoticia());
+            ps.setBoolean(3, true);
+            ps.setTimestamp(4, new java.sql.Timestamp(new Date().getTime()));
+            ps.execute();
+            fecharConexao();
+        } catch (SQLException ex) {
+            Logger.getLogger(NoticiaDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public boolean discurtir(CurtirTemp curtirTemp) {
+        String sqlConsultar = "SELECT * FROM tbl_curtir WHERE id_usuario=? AND id_noticia=?";
+        Curtir curtir = null;
+        boolean retorno = false;
+        try {
+            ps = connection.prepareStatement(sqlConsultar);
+            ps.setInt(1, curtirTemp.getIdUsuario());
+            ps.setInt(2, curtirTemp.getIdNoticia());
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                curtir = new Curtir();
+                curtir.setId(rs.getInt("id"));
+            }
+            if (curtir != null) {
+                String sqlDelete = "DELETE FROM tbl_curtir\n"
+                        + "WHERE id=?";
+                ps = connection.prepareStatement(sqlDelete);
+                ps.setInt(1, curtir.getId());
+                ps.execute();
+                retorno = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NoticiaDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        fecharConexao();
+        return retorno;
+    }
+
+    public List<CurtidasUsuario> listaCurtir(CurtirTemp curtirTemp) {
+        String sql = "SELECT * FROM tbl_curtir\n"
+                + "INNER JOIN tbl_usuario ON tbl_curtir.id_usuario = tbl_usuario.id\n"
+                + "WHERE tbl_curtir.id_noticia =?\n"
+                + "ORDER BY data DESC";
+        CurtidasUsuario cu = null;
+        List<CurtidasUsuario> lista = new ArrayList<>();
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, curtirTemp.getIdNoticia());
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                cu = new CurtidasUsuario();
+                cu.setFoto(rs.getString("foto"));
+                cu.setNome(rs.getString("nome"));
+                lista.add(cu);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NoticiaDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        fecharConexao();
+        return lista;
     }
 
     //Método para fecuar as conexões;

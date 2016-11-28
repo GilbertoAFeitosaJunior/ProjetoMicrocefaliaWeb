@@ -95,8 +95,7 @@ public class NoticiaController extends HttpServlet {
             String id = request.getParameter("id");
             if (!id.isEmpty()) {
                 try {
-                    dao.deletarNoticia(Integer.parseInt(id));
-                    
+                    dao.deletarNoticia(Integer.parseInt(id));                    
                     response.sendRedirect("noticiacontroller.do?acao=listaNoticia");
                 } catch (SQLException ex) {
                     request.setAttribute("msg", "Erro não foi possível excluir a notícia. (SQL)");

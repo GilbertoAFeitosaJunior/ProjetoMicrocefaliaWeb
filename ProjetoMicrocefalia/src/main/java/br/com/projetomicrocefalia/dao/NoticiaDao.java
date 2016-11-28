@@ -6,6 +6,8 @@
 package br.com.projetomicrocefalia.dao;
 
 import br.com.projetomicrocefalia.model.ChamadaNoticia;
+import br.com.projetomicrocefalia.model.ComentarTemp;
+import br.com.projetomicrocefalia.model.ComentarioRest;
 import br.com.projetomicrocefalia.model.CurtidasUsuario;
 import br.com.projetomicrocefalia.model.Curtir;
 import br.com.projetomicrocefalia.model.CurtirTemp;
@@ -144,7 +146,7 @@ public class NoticiaDao {
         return noticia;
     }
 
-    //METEDOS PARA O RESTFULL
+    //METEDOS PARA O RESTFULL NOTÍCIA
     public List<ChamadaNoticia> chamadasNoticias(Pesquisa pesquisa) {
         List<ChamadaNoticia> chamadas = new ArrayList<>();
         ChamadaNoticia cn = null;
@@ -193,14 +195,13 @@ public class NoticiaDao {
             System.out.println(ps);
         }
 
-        fecharConexao();
         try {
             psTemp.close();
             rsTemp.close();
         } catch (SQLException ex) {
             Logger.getLogger(NoticiaDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        fecharConexao();
         return chamadas;
     }
 
@@ -317,6 +318,7 @@ public class NoticiaDao {
             rs = ps.executeQuery();
             while (rs.next()) {
                 cu = new CurtidasUsuario();
+                cu.setId_usuario(rs.getInt("id_usuario"));
                 cu.setFoto(rs.getString("foto"));
                 cu.setNome(rs.getString("nome"));
                 lista.add(cu);
@@ -326,6 +328,50 @@ public class NoticiaDao {
         }
         fecharConexao();
         return lista;
+    }
+
+    public void comentar(ComentarTemp comentarTemp) throws SQLException {
+        String sql = "INSERT INTO tbl_comentario(id_usuario, id_noticia, comentario, data)\n"
+                + "VALUES (?, ?, ?, ?);";
+        ps = connection.prepareStatement(sql);
+        ps.setInt(1, comentarTemp.getIdUsuario());
+        ps.setInt(2, comentarTemp.getIdNoticia());
+        ps.setString(3, comentarTemp.getComentario());
+        ps.setTimestamp(4, new java.sql.Timestamp(new Date().getTime()));
+        ps.execute();
+        fecharConexao();
+    }
+
+    public List<ComentarioRest> comentarios(int idNoticia) throws SQLException {
+        List<ComentarioRest> lista = new ArrayList<>();
+        ComentarioRest cr = null;
+        String sql = "SELECT tbl_comentario.id, tbl_usuario.nome, tbl_usuario.foto, tbl_comentario.comentario, tbl_comentario.data FROM tbl_comentario\n"
+                + "INNER JOIN tbl_usuario ON tbl_comentario.id_usuario = tbl_usuario.id\n"
+                + "INNER JOIN tbl_noticia ON tbl_comentario.id_noticia = tbl_noticia.id\n"
+                + "WHERE tbl_noticia.id=?";
+        ps = connection.prepareStatement(sql);
+        ps.setInt(1, idNoticia);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            cr = new ComentarioRest();
+            cr.setId(rs.getInt("id"));
+            cr.setNome(rs.getString("nome"));
+            cr.setFoto(rs.getString("foto"));
+            cr.setComentario(rs.getString("comentario"));
+            cr.setDate(rs.getTimestamp("data"));
+            lista.add(cr);
+        }
+        fecharConexao();
+        return lista;
+    }
+
+    public void descomentar(int id) throws SQLException {
+        String sql = "DELETE FROM tbl_comentario\n"
+                + "WHERE  id=?";
+        ps = connection.prepareStatement(sql);
+        ps.setInt(1, id);
+        ps.execute();
+        fecharConexao();
     }
 
     //Método para fecuar as conexões;

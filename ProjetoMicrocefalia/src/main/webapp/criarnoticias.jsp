@@ -22,19 +22,19 @@
         <a href="welcome.jsp">Home</a></br>
         <h1>Adicionar nova notícia</h1>
         <form action="noticiacontroller.do?acao=adicionarNoticia" method="POST" accept-charset="utf-8">
-            <input type="text" placeholder="LINK DA FOTO DA NOTÍCIA"  required size="150" name="fotoNoticia"/>
+            <input type="text" placeholder="LINK DA FOTO DA NOTÍCIA"  required size="100" name="fotoNoticia"/>
             </br>
             </br>
-            <input type="text" placeholder="TITULO DA NOTICIA"  required size="150" name="tituloNoticia"/>
+            <input type="text" placeholder="TITULO DA NOTICIA"  required size="100" name="tituloNoticia"/>
             </br>
             </br>
-            <input type="text" placeholder="CHAMADA DA NOTÍCIA"  required size="150" name="chamadaNoticia"/>
+            <input type="text" placeholder="CHAMADA DA NOTÍCIA"  required size="100" name="chamadaNoticia"/>
             </br>
             </br>
-            <input type="text" placeholder="FONTE DA NOTÍCIA"  required size="150" name="fonteNoticia" />
+            <input type="text" placeholder="FONTE DA NOTÍCIA"  required size="100" name="fonteNoticia" />
             </br>
             </br>
-            <input type="text" placeholder="DATA DA NOTÍCIA"  required size="150" name="dataNoticia" id="dataNoticia" />
+            <input type="text" placeholder="DATA DA NOTÍCIA"  required size="100" name="dataNoticia" id="dataNoticia" />
             </br>
             </br>
             <textarea cols="110"  placeholder="TEXTO DA NOTÍCIA"  required rows="20" name="conteudoNoticia" ></textarea>

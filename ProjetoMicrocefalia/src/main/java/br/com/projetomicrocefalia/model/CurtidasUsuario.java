@@ -12,6 +12,7 @@ package br.com.projetomicrocefalia.model;
 public class CurtidasUsuario {
 
     private String foto;
+    private int id_usuario;
     private String nome;
 
     public String getFoto() {
@@ -22,6 +23,14 @@ public class CurtidasUsuario {
         this.foto = foto;
     }
 
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -30,4 +39,5 @@ public class CurtidasUsuario {
         this.nome = nome;
     }
 
+    
 }

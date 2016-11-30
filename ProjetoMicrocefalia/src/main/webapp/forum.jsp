@@ -18,7 +18,7 @@
 
         <ul>
             <li><a href="criarmoderador.jsp">Tornar-se Moderador</a></li>
-            <li><a href="#">Adicionar Nova Categoria</a></li>
+            <li><a href="forumcontroller.do?acao=listar_categoria">Adicionar Nova Categoria</a></li>
             <li><a href="#">Tópicos em Aberto</a></li>
             <li><a href="#">Tópicos Fechados</li>
             <li><a href="welcome.jsp">Home</a></li>

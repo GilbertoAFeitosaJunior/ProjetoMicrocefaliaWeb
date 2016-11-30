@@ -11,11 +11,11 @@ import java.util.Date;
  *
  * @author Gilberto
  */
-public class Moderador {
+public class CategoriaForum {
 
     private int id;
-    private UsuarioPainel usuarioPainel;
-    private String especialidade;
+    private String nome;
+    private Moderador moderador;
     private Date data;
 
     public int getId() {
@@ -26,20 +26,20 @@ public class Moderador {
         this.id = id;
     }
 
-    public UsuarioPainel getUsuarioPainel() {
-        return usuarioPainel;
+    public String getNome() {
+        return nome;
     }
 
-    public void setUsuarioPainel(UsuarioPainel usuarioPainel) {
-        this.usuarioPainel = usuarioPainel;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getEspecialidade() {
-        return especialidade;
+    public Moderador getModerador() {
+        return moderador;
     }
 
-    public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade;
+    public void setModerador(Moderador moderador) {
+        this.moderador = moderador;
     }
 
     public Date getData() {
@@ -49,5 +49,7 @@ public class Moderador {
     public void setData(Date data) {
         this.data = data;
     }
+
+   
 
 }

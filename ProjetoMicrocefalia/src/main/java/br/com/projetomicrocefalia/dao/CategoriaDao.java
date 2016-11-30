@@ -5,13 +5,16 @@
  */
 package br.com.projetomicrocefalia.dao;
 
+import br.com.projetomicrocefalia.model.CategoriaForum;
 import br.com.projetomicrocefalia.model.Moderador;
 import br.com.projetomicrocefalia.model.UsuarioPainel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,51 +22,51 @@ import java.util.logging.Logger;
  *
  * @author Gilberto
  */
-public class ModeradorDao {
+public class CategoriaDao {
 
     Connection connection = Conexao.getConexao();
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public void criarModerador(Moderador moderador) throws SQLException {
-        String sql = "INSERT INTO tbl_moderador(id_usuario_painel, especialidade, data)\n"
-                + "    VALUES (?, ?, ?)";
+    public void criarCategoria(CategoriaForum cf) throws SQLException {
+        String sql = "INSERT INTO tbl_categoria_forum(nome, id_usuario_moderador, data)\n"
+                + "    VALUES (?, ?, ?);";
 
         ps = connection.prepareStatement(sql);
-        ps.setInt(1, moderador.getUsuarioPainel().getId());
-        ps.setString(2, moderador.getEspecialidade());
+        ps.setString(1, cf.getNome());
+        ps.setInt(2, cf.getModerador().getId());
         ps.setTimestamp(3, new java.sql.Timestamp(new Date().getTime()));
         ps.execute();
         fecharConexao();
     }
 
-    public boolean autencicarModerador(int idUsuarioPainel) throws SQLException {
-        String sql = "SELECT * FROM tbl_moderador WHERE id_usuario_painel=?";
+    public List<CategoriaForum> categoriasList() throws SQLException {
+        String sql = "SELECT * FROM tbl_categoria_forum\n"
+                + "INNER JOIN tbl_moderador ON tbl_categoria_forum.id_usuario_moderador = tbl_moderador.id\n"
+                + "ORDER BY tbl_categoria_forum.data ASC";
+        CategoriaForum cf;
+        Moderador moderador;
+        UsuarioPainel up;
+
+        List<CategoriaForum> lista = new ArrayList<>();
+
         ps = connection.prepareStatement(sql);
-        ps.setInt(1, idUsuarioPainel);
         rs = ps.executeQuery();
         while (rs.next()) {
-            return true;
-        }
-        return false;
-
-    }
-
-    public Moderador buscarModeradro(UsuarioPainel usuarioPainel) throws SQLException {
-        String sql = "SELECT * FROM tbl_moderador WHERE id_usuario_painel=?";
-        ps = connection.prepareStatement(sql);
-        ps.setInt(1, usuarioPainel.getId());
-        rs = ps.executeQuery();
-        Moderador moderador = null;
-        while (rs.next()) {
+            cf = new CategoriaForum();
+            cf.setId(rs.getInt("id"));
+            cf.setNome(rs.getString("nome"));
+            cf.setData(rs.getTimestamp("data"));          
+          
+            
             moderador = new Moderador();
-            moderador.setId(rs.getInt("id"));
-            moderador.setEspecialidade(rs.getString("especialidade"));
-            moderador.setData(rs.getTimestamp("data"));
-            moderador.setUsuarioPainel(usuarioPainel);
+            moderador.setId(rs.getInt("id_usuario_moderador"));            
+            
+            cf.setModerador(moderador);
+            lista.add(cf);
         }
-        return moderador;
-
+        fecharConexao();
+        return lista;
     }
 
     //Método para fecuar as conexões;

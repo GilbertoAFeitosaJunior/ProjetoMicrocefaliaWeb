@@ -15,6 +15,7 @@ import java.util.Date;
 public class ComentarioRest implements Serializable {
 
     private int id;
+    private int idUsuario;
     private String nome;
     private String foto;
     private String comentario;
@@ -26,6 +27,14 @@ public class ComentarioRest implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNome() {
@@ -60,6 +69,6 @@ public class ComentarioRest implements Serializable {
         this.date = date;
     }
 
-    
+ 
 
 }

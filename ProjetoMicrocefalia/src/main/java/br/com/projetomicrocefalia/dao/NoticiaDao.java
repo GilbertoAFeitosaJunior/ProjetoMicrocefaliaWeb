@@ -345,16 +345,18 @@ public class NoticiaDao {
     public List<ComentarioRest> comentarios(int idNoticia) throws SQLException {
         List<ComentarioRest> lista = new ArrayList<>();
         ComentarioRest cr = null;
-        String sql = "SELECT tbl_comentario.id, tbl_usuario.nome, tbl_usuario.foto, tbl_comentario.comentario, tbl_comentario.data FROM tbl_comentario\n"
+        String sql = "SELECT tbl_comentario.id,tbl_usuario.id AS id_usuario, tbl_usuario.nome, tbl_usuario.foto, tbl_comentario.comentario, tbl_comentario.data FROM tbl_comentario\n"
                 + "INNER JOIN tbl_usuario ON tbl_comentario.id_usuario = tbl_usuario.id\n"
                 + "INNER JOIN tbl_noticia ON tbl_comentario.id_noticia = tbl_noticia.id\n"
-                + "WHERE tbl_noticia.id=?";
+                + "WHERE tbl_noticia.id=?\n"
+                + "ORDER BY tbl_comentario.data DESC";
         ps = connection.prepareStatement(sql);
         ps.setInt(1, idNoticia);
         rs = ps.executeQuery();
         while (rs.next()) {
             cr = new ComentarioRest();
             cr.setId(rs.getInt("id"));
+            cr.setIdUsuario(rs.getInt("id_usuario"));
             cr.setNome(rs.getString("nome"));
             cr.setFoto(rs.getString("foto"));
             cr.setComentario(rs.getString("comentario"));

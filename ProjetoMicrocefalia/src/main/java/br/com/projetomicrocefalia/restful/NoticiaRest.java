@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -135,4 +136,19 @@ public class NoticiaRest {
         return Response.status(Response.Status.OK).build();
     }
 
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/comentario/editar")
+    public Response editarComentario(ComentarioRest comentarioRest) {
+        NoticiaDao dao = new NoticiaDao();
+        try {
+            dao.editarComentario(comentarioRest);
+            return Response.status(Response.Status.OK).build();
+        } catch (SQLException ex) {
+            Logger.getLogger(NoticiaRest.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+    }
 }

@@ -342,6 +342,19 @@ public class NoticiaDao {
         fecharConexao();
     }
 
+    public void editarComentario(ComentarioRest comentarioRest) throws SQLException {
+        String sql = "UPDATE tbl_comentario SET comentario=?\n"
+                + "WHERE id=? AND id_usuario=?";
+
+        ps = connection.prepareStatement(sql);
+        ps.setString(1, comentarioRest.getComentario());
+        ps.setInt(2, comentarioRest.getId());
+        ps.setInt(3, comentarioRest.getIdUsuario());
+        ps.execute();
+
+        fecharConexao();
+    }
+
     public List<ComentarioRest> comentarios(int idNoticia) throws SQLException {
         List<ComentarioRest> lista = new ArrayList<>();
         ComentarioRest cr = null;

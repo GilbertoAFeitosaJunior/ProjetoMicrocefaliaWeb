@@ -25,13 +25,15 @@
                 <th>NOME</th>
                 <th>DATA</th>
                 <th>USUARIO</th>
+                <th>OPÇÃO</th>
             </tr>
             <c:forEach var="categoria" items="${requestScope.listaCategoria}">
                 <tr>
                     <td>${categoria.id}</td>
                     <td>${categoria.nome}</td>
                     <td>${categoria.data}</td>
-                    <td>${categoria.moderador.usuarioPainel.nome}</td>                       
+                    <td>${categoria.moderador.usuarioPainel.nome}</td>  
+                    <td><a href="forumcontroller.do?acao=editarcategoria&id=${categoria.id}">EDITAR</a></td>
 
                 </c:forEach>
         </table>

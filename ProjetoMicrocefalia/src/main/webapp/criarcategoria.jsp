@@ -4,6 +4,7 @@
     Author     : Gilberto
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -14,10 +15,19 @@
     <body>
         <a href="forumcontroller.do?acao=listar_categoria">VOLTAR</a>
         <h1>NOVA CATEGORIA</h1>
-        <form action="forumcontroller.do?acao=novacategoria" method="POST">
-            <input type="text" placeholder="Nome da Categoria"  required size="50" name="categoria"/>
-            <button type="submit">Enviar</button>
-        </form>
+        <c:if test="${categoria == null}">
+            <form action="forumcontroller.do?acao=novacategoria" method="POST">
+                <input type="text" placeholder="Nome da Categoria"  required size="50" name="categoria"/>
+                <button type="submit">Enviar</button>
+            </form>
+        </c:if>
+        
+        <c:if test="${categoria != null}">
+            <form action="forumcontroller.do?acao=editarcategoria&id=${categoria.id}" method="POST">
+                <input type="text" value="${categoria.nome}"  required size="50" name="categoria"/>
+                <button type="submit">Enviar</button>
+            </form>
+        </c:if>
 
     </body>
 </html>

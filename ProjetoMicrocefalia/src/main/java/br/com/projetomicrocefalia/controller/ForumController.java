@@ -53,6 +53,23 @@ public class ForumController extends HttpServlet {
             }
         }
 
+        if (acao.equals("editarcategoria")) {
+            try {
+                String id = request.getParameter("id");
+                categoriaDao = new CategoriaDao();
+                CategoriaForum cf = categoriaDao.buscarCategoria(Integer.parseInt(id));
+                if (cf != null) {
+                    request.setAttribute("categoria", cf);
+                    request.getRequestDispatcher("criarcategoria.jsp").forward(request, response);
+                }
+            } catch (SQLException ex) {
+                request.setAttribute("msg", "Erro não foi editar categoria (SQL)");
+                request.getRequestDispatcher("erro.jsp").forward(request, response);
+                Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
     }
 
     @Override
@@ -89,23 +106,47 @@ public class ForumController extends HttpServlet {
         if (acao.equals("novacategoria")) {
             try {
                 moderadorDao = new ModeradorDao();
-                Moderador moderador = moderadorDao.buscarModeradro(up);               
+                Moderador moderador = moderadorDao.buscarModeradro(up);
                 if (moderador != null) {
                     String nomeDaCategoria = request.getParameter("categoria");
 
                     CategoriaForum cf = new CategoriaForum();
                     cf.setModerador(moderador);
                     cf.setNome(nomeDaCategoria);
-                    
+
                     categoriaDao = new CategoriaDao();
                     categoriaDao.criarCategoria(cf);
+                    request.getRequestDispatcher("aviso_catoria_add.jsp").forward(request, response);
                 }
             } catch (SQLException ex) {
                 request.setAttribute("msg", "Apenas MODERADOR pode realizar essa operação");
                 request.getRequestDispatcher("erro.jsp").forward(request, response);
                 Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
 
+        if (acao.equals("editarcategoria")) {
+            try {
+                moderadorDao = new ModeradorDao();
+                Moderador moderador = moderadorDao.buscarModeradro(up);
+                if (moderador != null) {
+                    String nomeDaCategoria = request.getParameter("categoria");
+                    String id = request.getParameter("id");
+                    
+                    CategoriaForum cf = new CategoriaForum();
+                    cf.setId(Integer.parseInt(id));
+                    cf.setModerador(moderador);
+                    cf.setNome(nomeDaCategoria);
+
+                    categoriaDao = new CategoriaDao();
+                    categoriaDao.editarCategoria(cf);
+                    request.getRequestDispatcher("aviso_catoria_add.jsp").forward(request, response);
+                }
+            } catch (SQLException ex) {
+                request.setAttribute("msg", "Apenas MODERADOR pode realizar essa operação");
+                request.getRequestDispatcher("erro.jsp").forward(request, response);
+                Logger.getLogger(ForumController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

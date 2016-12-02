@@ -6,6 +6,7 @@
 package br.com.projetomicrocefalia.dao;
 
 import br.com.projetomicrocefalia.model.CategoriaForum;
+import br.com.projetomicrocefalia.model.CategoriaRest;
 import br.com.projetomicrocefalia.model.Moderador;
 import br.com.projetomicrocefalia.model.UsuarioPainel;
 import java.sql.Connection;
@@ -107,6 +108,26 @@ public class CategoriaDao {
             cf.setModerador(moderador);
 
             lista.add(cf);
+        }
+        fecharConexao();
+        return lista;
+    }
+
+    public List<CategoriaRest> listCatetoriaRest() throws SQLException {
+        String sql = "SELECT id,  nome FROM tbl_categoria_forum;";
+        ps = connection.prepareStatement(sql);
+        rs = ps.executeQuery();
+
+        List<CategoriaRest> lista = new ArrayList<>();
+        CategoriaRest categoriaRest;
+
+        while (rs.next()) {
+            categoriaRest = new CategoriaRest();
+            
+            categoriaRest.setId(rs.getInt("id"));
+            categoriaRest.setNome(rs.getString("nome"));
+            
+            lista.add(categoriaRest);
         }
         fecharConexao();
         return lista;

@@ -6,7 +6,9 @@
 package br.com.projetomicrocefalia.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -55,6 +57,14 @@ public class Noticia implements Serializable {
         this.chamada = chamada;
     }
 
+    @XmlTransient
+    public String getDataString() {
+        if (data != null) {
+            return new SimpleDateFormat("dd/MM/yyyy").format(data);
+        }
+        return "";
+    }
+    
     public Date getData() {
         return data;
     }

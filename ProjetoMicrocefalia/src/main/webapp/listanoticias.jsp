@@ -2,55 +2,63 @@
     Document   : exibirusuarioandroid
     Created on : 04/11/2016, 10:51:11
     Author     : Gilberto
+<a href="#" class="button success" ><span class="mif-play"></span> Categorias</a>
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Exibir Usuário</title>
-    </head>
-    <body>
 
-        <a href="welcome.jsp">Home</a>
+<%@include file="fragment/head.jsp" %>
 
-        <h1>Lista de Notícias</h1>
+<h1 class="text-light">Lista de Notícias</h1>
+<hr class="thin bg-grayLighter">
+<a href="criarnoticias.jsp" class="button primary"><span class="mif-plus"></span> Adicionar Nova...</a>
+<hr class="thin bg-grayLighter">
 
-        <table cellpadding="5" border="1px">
+<table class="dataTable border hovered  bordered" data-role="datatable" data-auto-width="false">
+    <thead>
+        <tr>
+            <th>CÓDIGO</th>
+            <th>TITULO</th>
+            <th>DATA</th>
+            <th>USUÁRIO</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="noticia" items="${requestScope.noticias}">
             <tr>
-                <th>CÓDIGO</th>
-                <th>TITULO</th>
-                <th>DATA</th>
-                <th>USUÁRIO</th>
-                <th>OPÇAO DO SISTEMA</th>
+                <td>${noticia.id}</td>
+                <td>${noticia.titulo}</td>
+                <td>${noticia.dataString}</td>
+                <td>${noticia.usuarioPainel.nome}</td>                       
+                <td>
+                    <a href ="noticiacontroller.do?acao=exibirnoticia&id=${noticia.id}"> 
+                        <span class="mif-eye"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href ="noticiacontroller.do?acao=editarnoticia&id=${noticia.id}"> 
+                        <span class="mif-pencil"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href ="javascript: excluir(${noticia.id})"> 
+                        <span class="mif-bin"></span>
+                    </a>
+                </td>
             </tr>
-            <c:forEach var="noticia" items="${requestScope.noticias}">
-                <tr>
-                    <td>${noticia.id}</td>
-                    <td>${noticia.titulo}</td>
-                    <td>${noticia.data}</td>
-                    <td>${noticia.usuarioPainel.nome}</td>                       
-                    <td>
-                        <a href ="noticiacontroller.do?acao=exibirnoticia&id=${noticia.id}"> VISUALIZAR </a>
-                        |
-                        <a href ="noticiacontroller.do?acao=editarnoticia&id=${noticia.id}"> EDITAR </a>
-                        |
-                        <a href ="javascript: excluir(${noticia.id})"> EXCLUIR </a>
-                    </td>
-                </tr>
-            </c:forEach>
-        </table>
-        <script>
-            function excluir( id ){
-                if(confirm("Deseja Excluir?")) {
-                    window.location = "noticiacontroller.do?acao=deletarnoticia&id="+id;
-                }
-            }
-        </script>
+        </c:forEach>
+    </tbody>
+</table>
+<script>
+    function excluir(id) {
+        if (confirm("Deseja Excluir?")) {
+            window.location = "noticiacontroller.do?acao=deletarnoticia&id=" + id;
+        }
+    }
+</script>
 
-    </body>  
-  
-        
-</html>
+<%@include file="fragment/foot.jsp" %>

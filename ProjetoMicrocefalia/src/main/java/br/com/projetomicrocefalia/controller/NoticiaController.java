@@ -41,6 +41,8 @@ public class NoticiaController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         String acao = request.getParameter("acao");
         
+        // verificar se o usuario esta autenticado
+        
         if (acao.equals("listaNoticia")) {
             try {
                 dao = new NoticiaDao();

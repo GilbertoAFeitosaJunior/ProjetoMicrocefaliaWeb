@@ -5,43 +5,52 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Adicionar Notícias</title>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
-        <script type="text/javascript" src="https://raw.githubusercontent.com/digitalBush/jquery.maskedinput/1.4.1/dist/jquery.maskedinput.min.js"></script>
-        <script type="text/javascript">
-            $(function ($) {
-                $("#dataNoticia").mask("99/99/9999", {placeholder: "mm/dd/yyyy"});
-            });
-        </script>
-    </head>
-    <body>
-        <a href="welcome.jsp">Home</a></br>
-        <h1>Adicionar nova notícia</h1>
-        <form action="noticiacontroller.do?acao=adicionarNoticia" method="POST" accept-charset="utf-8">
-            <input type="text" placeholder="LINK DA FOTO DA NOTÍCIA"  required size="100" name="fotoNoticia"/>
-            </br>
-            </br>
-            <input type="text" placeholder="TITULO DA NOTICIA"  required size="100" name="tituloNoticia"/>
-            </br>
-            </br>
-            <input type="text" placeholder="CHAMADA DA NOTÍCIA"  required size="100" name="chamadaNoticia"/>
-            </br>
-            </br>
-            <input type="text" placeholder="FONTE DA NOTÍCIA"  required size="100" name="fonteNoticia" />
-            </br>
-            </br>
-            <input type="text" placeholder="DATA DA NOTÍCIA"  required size="100" name="dataNoticia" id="dataNoticia" />
-            </br>
-            </br>
-            <textarea cols="110"  placeholder="TEXTO DA NOTÍCIA"  required rows="20" name="conteudoNoticia" ></textarea>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-            <br/><br/>
-            <button type="submit">SALVAR NOTÍCIA</button>
-        </form>
+<%@include file="fragment/head.jsp" %>
 
-    </body>
-</html>
+<h1>Adicionar nova notícia</h1>
+<form action="noticiacontroller.do?acao=adicionarNoticia" method="POST" accept-charset="utf-8">
+
+    <label>Foto da notícia</label>
+    <div class="input-control text full-size">
+        <input type="text" placeholder="LINK DA FOTO DA NOTÍCIA" required size="150" name="fotoNoticia"/>
+    </div>      
+    </br>
+    </br>
+    <label>Título</label>
+    <div class="input-control text full-size">
+        <input type="text" placeholder="TITULO DA NOTICIA"  required size="100" name="tituloNoticia"/>
+    </div>
+    </br>
+    </br>
+    <label>Chamada</label>
+    <div class="input-control text full-size">
+        <input type="text" placeholder="CHAMADA DA NOTÍCIA"  required size="150" name="chamadaNoticia"/>
+    </div>
+    </br>
+    </br>
+    <label>Fonte</label>
+    <div class="input-control text full-size">
+        <input type="text" placeholder="FONTE DA NOTÍCIA" required size="150" name="fonteNoticia" />
+    </div>
+    </br>
+    </br>
+    <label>Data da notícia</label>
+    <div class="input-control text full-size" data-role="datepicker" data-format="dd/mm/yyyy">
+        <input type="text" readonly="true" placeholder="DATA DA NOTÍCIA"  required size="150" name="dataNoticia" id="dataNoticia" />
+        <button class="button"><span class="mif-calendar"></span></button>
+    </div>
+    </br>
+    </br>
+     <label>Notícia</label>
+    <div class="input-control textarea full-size">
+        <textarea rows="10" required  name="conteudoNoticia" ></textarea>
+    </div>
+
+    <br/><br/>
+    <button class="button success" type="submit">Salvar</button>
+    <button class="button danger" type="button" onclick="history.back();">Cancelar</button>
+</form>
+
+<%@include file="fragment/foot.jsp" %>

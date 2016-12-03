@@ -70,7 +70,7 @@ public class AutenticacaoController extends HttpServlet {
                 if (usuarioPainel != null && usuarioPainel.isPermissao() == true) {
                     HttpSession session = request.getSession();
                     session.setAttribute("usuLogado", usuarioPainel);
-                    request.getRequestDispatcher("welcome.jsp").forward(request, response);
+                    response.sendRedirect("noticiacontroller.do?acao=listaNoticia");
                 } else {
                     if (usuarioPainel != null && usuarioPainel.isPermissao() == false) {
                         request.setAttribute("msg", "Usuário não autenticado, favor aguardar a liberação no sistema");

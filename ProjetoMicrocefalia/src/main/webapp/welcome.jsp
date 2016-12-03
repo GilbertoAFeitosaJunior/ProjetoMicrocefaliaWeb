@@ -4,9 +4,8 @@
     Author     : Gilberto
 --%>
 
-<%
+<%--
     response.sendRedirect("noticiacontroller.do?acao=listaNoticia");
-%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -21,11 +20,11 @@
 
 
         <ul>
-            <li><a href="criarnoticias.jsp">Adicionar Nova NÃ³ticia</a></li>
-            <li><a href="noticiacontroller.do?acao=listaNoticia">Lista de NotÃ­cias</a></li>
+            <li><a href="criarnoticias.jsp">Adicionar Nova Nóticia</a></li>
+            <li><a href="noticiacontroller.do?acao=listaNoticia">Lista de Notícias</a></li>
             <li><a href="usuariocontroller.do?acao=listaUsuario">Liberar Usuario Web</a></li>
             <li><a href="usuandroidcontroller.do?acao=listar">Usuarios Android</a></li>
-            <li><a href="forum.jsp">FÃ³rum</a></li>
+            <li><a href="forum.jsp">Fórum</a></li>
             <li><a href="autenticador.do">Sair do Sistema</a></li>
 
         </ul>
@@ -33,3 +32,4 @@
 
     </body>
 </html>
+--%>

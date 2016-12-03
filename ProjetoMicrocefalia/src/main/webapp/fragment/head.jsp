@@ -107,14 +107,14 @@
                             </li>
                             <li>
                                 <a href="forum.jsp">
-                                    <span class="mif-drive-eta icon"></span>
+                                    <span class="mif-bubbles icon"></span>
                                     <span class="title">Fórum</span>
                                 </a>
                             </li>
 
                             <li>
                                 <a href="usuandroidcontroller.do?acao=listar">
-                                    <span class="mif-vpn-publ icon"></span>
+                                    <span class="mif-android  icon"></span>
                                     <span class="title">Usuarios Android</span>
                                 </a>
                             </li>

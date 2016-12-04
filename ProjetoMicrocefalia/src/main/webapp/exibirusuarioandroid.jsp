@@ -3,16 +3,10 @@
     Created on : 04/11/2016, 10:51:11
     Author     : Gilberto
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Exibir Usuário</title>
-    </head>
-    <body>
-        <a href="welcome.jsp">Home</a></br></br></br>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@include file="fragment/head.jsp" %>
 
         <img src="${requestScope.usuarioAndroid.foto}" width="200" height="200" /> 
         <h2>${requestScope.usuarioAndroid.nome}</h2>
@@ -30,7 +24,4 @@
         <p><strong>CEP:</strong> ${requestScope.usuarioAndroid.cep}</p>
 
 
-
-
-    </body>
-</html>
+<%@include file="fragment/foot.jsp" %>

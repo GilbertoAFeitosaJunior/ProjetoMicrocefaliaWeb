@@ -106,7 +106,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="forum.jsp">
+                                <a href="forumcontroller.do?acao=listar_categoria">
                                     <span class="mif-bubbles icon"></span>
                                     <span class="title">Fórum</span>
                                 </a>

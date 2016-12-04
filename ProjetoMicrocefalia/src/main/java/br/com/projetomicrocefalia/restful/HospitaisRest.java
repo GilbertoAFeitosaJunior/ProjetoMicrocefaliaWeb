@@ -5,9 +5,7 @@
  */
 package br.com.projetomicrocefalia.restful;
 
-import br.com.projetomicrocefalia.dao.CategoriaDao;
 import br.com.projetomicrocefalia.dao.HospitaisDao;
-import br.com.projetomicrocefalia.model.CategoriaRest;
 import br.com.projetomicrocefalia.model.Estados;
 import br.com.projetomicrocefalia.model.Hospitais;
 import java.sql.SQLException;
@@ -15,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
